@@ -77,7 +77,7 @@ function main() {
         $(window).scrollTop(0);
     }
 
-    function imageView(imageUrl) {
+    function imageView(imageUrl, originUrl) {
         // Requires that pageView has been created already
         var image = document.createElement('div');
         $(image).css({
@@ -92,7 +92,7 @@ function main() {
             'border': '1px solid #555'
         });
         $(image).click(function() {
-            var popUrl = getFormUrl()+encodeURIComponent(imageUrl);
+            var popUrl = getFormUrl()+encodeURIComponent(imageUrl)+'&pin-origin-url='+encodeURIComponent(originUrl);
             window.open(popUrl);
             closePinry();
         });
@@ -106,7 +106,7 @@ function main() {
         var images = $('body').find('img');
         images.each(function() {
             if ($(this).width() > 200 && $(this).height() > 200)
-                imageView(this.src);
+                imageView(this.src, window.location.href);
         });
         return images;
     }

@@ -64,6 +64,7 @@ $(window).load(function() {
             formFields = [$('#pin-form-image-url'), $('#pin-form-description'),
             $('#pin-form-tags')],
             pinFromUrl = getUrlParameter('pin-image-url');
+            pinOriginUrl = getUrlParameter('pin-origin-url');
         // If editable grab existing data
         if (editPinId) {
             var promise = getPinData(editPinId);
@@ -114,13 +115,14 @@ $(window).load(function() {
                 createPinPreviewFromForm();
             });
             promise.error(function() {
-                message('Problem uploading image baz.', 'alert alert-error');
+                message('Problem uploading image.', 'alert alert-error');
             });
         });
         // If bookmarklet submit
         if (pinFromUrl) {
             $('#pin-form-image-upload').parent().css('display', 'none');
             $('#pin-form-image-url').val(pinFromUrl);
+            $('#pin-form-origin-url').val(pinOriginUrl);
             $('.navbar').css('display', 'none');
             modal.css({
                 'margin-top': -35,
@@ -159,7 +161,7 @@ $(window).load(function() {
                     editedPin = null;
                 });
                 promise.error(function() {
-                    message('Problem updating image foo.', 'alert alert-error');
+                    message('Problem updating image.', 'alert alert-error');
                 });
             } else {
                 var data = {
@@ -182,7 +184,7 @@ $(window).load(function() {
                     uploadedImage = false;
                 });
                 promise.error(function() {
-                    message('Problem saving image bar.', 'alert alert-error');
+                    message('Problem saving image.', 'alert alert-error');
                 });
             }
         });
