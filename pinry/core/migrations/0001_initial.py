@@ -14,11 +14,21 @@ class Migration(SchemaMigration):
             ('submitter', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
             ('url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True)),
             ('origin', self.gf('django.db.models.fields.URLField')(max_length=200, null=True)),
-            ('description', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('description', self.gf('django.db.models.fields.TextField')(null=True, blank=True)), 
             ('image', self.gf('django.db.models.fields.related.ForeignKey')(related_name='pin', to=orm['django_images.Image'])),
             ('published', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
         db.send_create_signal(u'core', ['Pin'])
+
+		# Adding model 'Comments'
+        db.create_table(u'core_comments', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('submitter', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('comment_text', self.gf('django.db.models.fields.TextField')(null=True, blank=True)), 
+            ('published', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('pin', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Pin'])),
+        ))
+        db.send_create_signal(u'core', ['Comments'])
 
 
     def backwards(self, orm):
@@ -95,11 +105,11 @@ class Migration(SchemaMigration):
         },
          u'core.comment': {
             'Meta': {'object_name': 'Comment'},
-            'commentText': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'comment_text': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),         
             'submitter': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"}),
             'published': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'pin': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.pin']"})
+            'pin': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.Pin']"})
         }
     }
 
